@@ -115,17 +115,16 @@ function optimizeJS(cb){
     }, function(){
         echo('Build date: '+ (new Date()).toUTCString());
         echo('optimized %d modules in %d miliseconds.', _nOptimizedModules, Date.now() - _optimizeStartTime);
-        if (typeof cb === 'function') cb();
-    });
 
-    rjs({
-        name : 'app',
-        optimize : 'none',
-        out : _path.join(DIST_FOLDER, 'js/app.raw.js')
-    }, function(){
-        echo('Build date: '+ (new Date()).toUTCString());
-        echo('optimized %d modules in %d miliseconds.', _nOptimizedModules, Date.now() - _optimizeStartTime);
-        if (typeof cb === 'function') cb();
+        rjs({
+            name : 'app',
+            optimize : 'none',
+            out : _path.join(DIST_FOLDER, 'js/app.raw.js')
+        }, function(){
+            echo('Build date: '+ (new Date()).toUTCString());
+            echo('optimized %d modules in %d miliseconds.', _nOptimizedModules, Date.now() - _optimizeStartTime);
+            if (typeof cb === 'function') cb();
+        });
     });
 }
 
@@ -140,15 +139,14 @@ function optimizeCSS(cb){
         out: _path.join(DIST_FOLDER, 'css/master.css')
     }, function(response){
         echo('optimized CSS files');
-        if (typeof cb === 'function') cb();
-    });
-    _requirejs.optimize({
-        optimizeCss : 'standard.keepLines',
-        cssIn: DEV_FOLDER + 'css/master.css',
-        out: _path.join(DIST_FOLDER, 'css/master.raw.css')
-    }, function(response){
-        echo('optimized CSS files');
-        if (typeof cb === 'function') cb();
+        _requirejs.optimize({
+            optimizeCss : 'standard.keepLines',
+            cssIn: DEV_FOLDER + 'css/master.css',
+            out: _path.join(DIST_FOLDER, 'css/master.raw.css')
+        }, function(response){
+            echo('optimized CSS files');
+            if (typeof cb === 'function') cb();
+        });
     });
 }
 

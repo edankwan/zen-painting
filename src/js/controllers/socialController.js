@@ -12,7 +12,8 @@ define([
         socialController.SHARE_URL_BASE = window.__DEFAULT_SHARE_URL + '?data=';
         socialController.HASHED_SHARE_URL_BASE = window.__DEFAULT_SHARE_URL + '#';
         socialController.SHARE_URL_BASE_LENGTH = socialController.SHARE_URL_BASE.length;
-        socialController.MAXIMUM_DATA_LENGTH = 2083 - socialController.SHARE_URL_BASE_LENGTH;
+        socialController.MAXIMUM_DATA_LENGTH = 2048 - socialController.SHARE_URL_BASE_LENGTH; //even though IE maximum uri length is 2083, Google url shortener only accept 2048 characters
+
 
         var API_KEY = 'AIzaSyAkV0WiUgBsOGcP8VS1AhSULMfwnndiMh0';
 
@@ -32,7 +33,15 @@ define([
             _initVariables();
             _initEvents();
 
-            _loadGoogleApi();
+            // if using codepen, dont use dynamic script loader
+            if(!window.onGoogleApiReady) {
+                _loadGoogleApi();
+            } else if(window.__isGoogleApiReady){
+                window.onGoogleApiReady = onGoogleApiReady;
+                onGoogleApiReady();
+            } else {
+                window.onGoogleApiReady = onGoogleApiReady;
+            }
         }
 
         function _initVariables(){

@@ -21,3 +21,8 @@ window.__urlInfo = (function(){
 // for codepen, it is better to share details url instead of editor url because if the URI is too large, we can still use hash tag instead of querystring
 window.__DEFAULT_SHARE_URL = window.__urlInfo.detailsUrl;
 window.__QUERY_STRING = window.__urlInfo.queryString;
+
+window.__isGoogleApiReady = false;
+window.onGoogleApiReady = function(){
+    window.__isGoogleApiReady = true;
+}
