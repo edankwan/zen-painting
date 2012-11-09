@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Zen Painting</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="css/master.css"/>
+        <script src="js/host/localhost.js"></script>
+        <script src="js/polyfills/rAF.js"></script>
+        <script src="js/polyfills/classList.js"></script>
+        <script src="js/lib/dat.gui.js"></script>
+        <script src="js/lib/edankwan/graphics/Ribbon.js"></script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <canvas id="canvas"></canvas>
+        </div>
+        <div id="blocker"></div>
+        <div id="image-container" class="black-overlay">
+            <div class="image-wrapper">
+                <img id="image" class="interactive"/>
+                <span class="close-btn">+</span>
+            </div>
+            <div class="text interactive"><input id="transparency-checkbox" type="checkbox" class="interactive" checked/>Use transparent background</div>
+            <div class="text">right click and save the image :-)</div>
+        </div>
+        <div id="code-container" class="black-overlay">
+            <div class="code-wrapper">
+                <textarea id="code" class="interactive"></textarea>
+                <span class="close-btn">+</span>
+            </div><br/>
+            <div id="redraw-btn" class="interactive small-btn">Redraw</div>
+        </div>
+        <div id="share-container" class="black-overlay">
+            <div class="share-wrapper">
+                <div class="top">
+                    <div class="text">LONG URL:</div>
+                    <input id="long-url" readonly="readonly"/>
+                </div>
+                <div class="middle">
+                    <div class="text">SHORT URL:</div>
+                    <input id="short-url" readonly="readonly"/>
+                </div>
+                <div class="bottom">
+                    <a class="facebook btn" target="_blank">SHARE ON FACEBOOK</a>
+                    <a class="twitter btn" target="_blank">SHARE ON TWITTER</a>
+                </div>
+                <span class="close-btn">+</span>
+            </div>
+        </div>
+        
+        <div id="logo">
+            <div class="top"></div>
+            <div class="middle"></div>
+            <div class="bottom"></div>
+        </div>
+        
+        <div id="footer">
+            <div id="about-btn">
+                <span>ABOUT</span>
+                <div class="container">
+                    <p>Zen Painting is an experiment stripped from my award winning HTML site - <a href="http://musiccanbefun.edankwan.com/" target="_blank">Music Can Be Fun</a>. The Ribbon class is now available to download under GPL (Giant Penis License).</p>
+                    <a href="http://www.linkedin.com/in/edankwan" target="_blank">LinkedIn</a> / 
+                    <a href="https://twitter.com/edankwan" target="_blank">Twitter</a> / 
+                    <a href="https://github.com/edankwan" target="_blank">Github</a>
+                </div>
+            </div>
+            <div class="facebook social-icon"></div>
+            <div class="twitter social-icon"></div>
+            <div class="link social-icon"></div>
+            <div class="info"></div>
+        </div>
+        <script>
+            var require = {urlArgs: "v=" + (new Date()).getTime()};
+        </script>
+        <script data-main="js/app" src="js/lib/require.js"></script>
+    </body>
+</html>
