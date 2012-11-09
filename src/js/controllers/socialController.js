@@ -15,7 +15,8 @@ define([
         socialController.MAXIMUM_DATA_LENGTH = 2048 - socialController.SHARE_URL_BASE_LENGTH; //even though IE maximum uri length is 2083, Google url shortener only accept 2048 characters
 
 
-        var API_KEY = 'AIzaSyAkV0WiUgBsOGcP8VS1AhSULMfwnndiMh0';
+        var API_LOGIN = 'o_1jjafij4a0';
+        var API_KEY = 'R_458495dba1b6856d5a9bd0fb1d8fe181';
 
         var _container;
         var _longUrl;
@@ -33,6 +34,7 @@ define([
             _initVariables();
             _initEvents();
 
+            /*
             // if using codepen, dont use dynamic script loader
             if(!window.onGoogleApiReady) {
                 _loadGoogleApi();
@@ -42,6 +44,7 @@ define([
             } else {
                 window.onGoogleApiReady = onGoogleApiReady;
             }
+            */
         }
 
         function _initVariables(){
@@ -83,6 +86,31 @@ define([
         }
 
         function _requestShortenUrl(){
+            window.onReceivingShortenedUrl = onReceivingShortenedUrl;
+            var url = socialController.SHARE_URL_BASE + dataController.compressData(dataController.data);
+            var scriptTag = document.createElement('script');
+            scriptTag.type = 'text/javascript';
+            scriptTag.src = 'http://api.bitly.com/v3/shorten?callback=onReceivingShortenedUrl&format=json&apiKey=' + API_KEY + '&login=' + API_LOGIN + '&longUrl=' + url;
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(scriptTag, firstScriptTag);
+        }
+
+        function onReceivingShortenedUrl(res){
+            if(res.data.url){
+                if(_lastUrl != res.data.long_url) return;
+                _socialContainer.classList.add('ready');
+                _shortUrl.classList.remove('error');
+                _shortUrl.value = res.data.url;
+                _facebookBtn.setAttribute('href', 'https://www.facebook.com/sharer.php?u=' + encodeURIComponent(res.data.url) + '&t=Check out my artwork');
+                _twitterBtn.setAttribute('href', 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('Check out my artwork: ') + encodeURIComponent(res.data.url));
+            } else {
+                _shortUrl.classList.add('error');
+                _shortUrl.value = 'Something is wrong and the url can\'t be shortened';
+            }
+        }
+
+        /*
+        function _requestShortenUrl(){
             if(!_isGoogleShortenerReady) return;
             var url = socialController.SHARE_URL_BASE + dataController.compressData(dataController.data);
             var request = gapi.client.urlshortener.url.insert({'resource': {'longUrl': url}});
@@ -99,7 +127,7 @@ define([
                     _twitterBtn.setAttribute('href', 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('Check out my artwork: ') + encodeURIComponent(res.id));
                 }
             });
-        }
+        }*/
 
         function onFooterIconsClick(){
             var compressedData = dataController.compressData(dataController.data);

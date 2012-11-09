@@ -25,4 +25,4 @@ window.__QUERY_STRING = window.__urlInfo.queryString;
 window.__isGoogleApiReady = false;
 window.onGoogleApiReady = function(){
     window.__isGoogleApiReady = true;
-}
+};
